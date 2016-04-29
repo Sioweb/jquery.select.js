@@ -30,7 +30,7 @@ select {
 	height: 8px;
 	top: calc(50% - 4px);
 	position: absolute;
-	background: url("/de-wGlobal/wGlobal/layout/images/ui-select.png") no-repeat scroll 0 0;
+	background: url("images/arrow.png") no-repeat scroll 0 0;
 	background-size: 100% auto;
 }
 .ui-select ul {
@@ -52,7 +52,7 @@ select {
 }
 .ui-select.open ul {
 	opacity: 1;
-	max-height: 1000px;
+	max-height: 6000px;
 }
 .ui-select li {
 	cursor: default;
