@@ -44,12 +44,16 @@
         return;
 
       if(!selfObj.template) {
+        var selected = selfObj.item.find('option:selected');
+        if(selected.length > 0)
+          selected = selected.html();
+        else selected = selfObj.item.find('option').eq(0).html();
         selfObj.template = '<div class="ui-select">';
-        selfObj.template += '<span class="label">'+selfObj.item.find('option').eq(0).html()+'</span>';
+        selfObj.template += '<span class="label">'+selected+'</span>';
         selfObj.template += '<ul>';
           $.each(selfObj.item.find('option'),function(key, option) {
             var $option = $(option);
-            selfObj.template += '<li data-value="'+$option.prop('value')+'">'+$option.html()+'</li>';
+            selfObj.template += '<li'+(selected == $option.html()?' data-selected="true"':'')+' data-value="'+$option.prop('value')+'">'+$option.html()+'</li>';
           });
 
         selfObj.template += '</ul></div>';
@@ -63,7 +67,7 @@
       $ul.css({'max-height':false});
 
       if($ul.offset().top + selectHeight > containerHeight) {
-        $ul.css('top',(containerHeight-$ul.offset().top)-selectHeight);
+        $ul.css('top',(containerHeight-$ul.offset().top)-Math.min(selfObj.maxOffset,selectHeight));
       }
 
 
@@ -79,13 +83,16 @@
       
       selfObj.template.find('li').click(function() {
         var $el = $(this);
-        $label.html($el.html());
 
-        selfObj.item.find('option').prop('selected',false);
-        selfObj.item.find('option[value="'+$el.data('value')+'"]').prop('selected',true);
-      });     
+        if(!selfObj.equalValues && $('select option[value="'+$el.data('value')+'"]:selected').length > 0) {
+          alert('Es werden keine doppelten Filter zugelassen!');
+        } else {
+          $label.html($el.html());
+          selfObj.item.find('option').prop('selected',false);
+          selfObj.item.find('option[value="'+$el.data('value')+'"]').prop('selected',true);
+        }
+      });
      };
-
   };
 
   $[pluginName] = $.fn[pluginName] = function(settings) {
@@ -98,8 +105,10 @@
             template: null,
             debug: false,
             enabled: true,
+            equalValues: true,
             container: null,
             item: null,
+            maxOffset: 99999,
             updated: function(){},
           },
           args = Array.prototype.slice.call(arguments);
