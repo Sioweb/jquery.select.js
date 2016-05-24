@@ -87,8 +87,10 @@
         if(!selfObj.equalValues && $('select option[value="'+$el.data('value')+'"]:selected').length > 0) {
           alert('Es werden keine doppelten Filter zugelassen!');
         } else {
+          selfObj.template.find('li').removeAttr('data-selected');
           $label.html($el.html());
           selfObj.item.find('option').prop('selected',false);
+          $el.attr('data-selected','true');
           selfObj.item.find('option[value="'+$el.data('value')+'"]').prop('selected',true);
         }
       });
