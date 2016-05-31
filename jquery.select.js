@@ -1,24 +1,37 @@
-(function($,window){
-
-  "use strict";
-
-  var pluginName = 'select',
+(function($){
 
   /**
    * @author Sascha Weidner
    * @brief Replace input dropdown with list 
    */
+
+  "use strict";
+
+  var pluginName = 'select',
+  standardOptions = {
+    template: null,
+    debug: false,
+    enabled: true,
+    equalValues: true,
+    container: null,
+    item: null,
+    maxOffset: 99999,
+    updated: function(){},
+  },
   PluginClass = function() {
 
     var selfObj = this,
         img = null;
     this.item = false;
+
+    this.initOptions = new Object(standardOptions);
     
     this.init = function(elem) {
       selfObj = this;
 
       if(!this.container)
-        this.container = window;
+        this.container = $(document);
+
       this.elem = elem;
       this.item = $(elem);
       this.container = $(this.container);
@@ -39,7 +52,7 @@
       var $label = null,
           $ul = null,
           selectHeight = 0,
-          containerHeight = selfObj.container.offset().top+selfObj.container.height();
+          containerHeight = (selfObj.container.offset() !== undefined ? selfObj.container.offset().top:0)+selfObj.container.height();
       if(!selfObj.enabled)
         return;
 
@@ -101,29 +114,22 @@
     var element = typeof this === 'function'?$('html'):this,
         newData = arguments[1]||{},
         returnElement = [];
+        
     returnElement[0] = element.each(function(k,i) {
       var pluginClass = $.data(this, pluginName),
-          standardOptions = {
-            template: null,
-            debug: false,
-            enabled: true,
-            equalValues: true,
-            container: null,
-            item: null,
-            maxOffset: 99999,
-            updated: function(){},
-          },
           args = Array.prototype.slice.call(arguments);
 
       if(!settings || typeof settings === 'object' || settings === 'init') {
+
         if(!pluginClass) {
           if(settings === 'init')
             settings = args[1] || {};
           pluginClass = new PluginClass();
-          if(settings)
-            standardOptions = $.extend(true,{},standardOptions,settings);
 
-          pluginClass = $.extend(standardOptions,pluginClass);
+          var newOptions = new Object(pluginClass.initOptions);
+          if(settings)
+            newOptions = $.extend(true,{},newOptions,settings);
+          pluginClass = $.extend(newOptions,pluginClass);
           /** Initialisieren. */
           pluginClass.init(this);
           $.data(this, pluginName, pluginClass);
@@ -145,4 +151,4 @@
 
   };
   
-})(jQuery,window);
+})(jQuery);
