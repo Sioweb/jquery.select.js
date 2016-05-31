@@ -30,8 +30,10 @@ select {
 	height: 8px;
 	top: calc(50% - 4px);
 	position: absolute;
+	/* some background image like down arrows  
 	background: url("images/arrow.png") no-repeat scroll 0 0;
 	background-size: 100% auto;
+	*/
 }
 .ui-select ul {
 	left: 0;
