@@ -16,6 +16,8 @@
     container: null,
     item: null,
     maxOffset: 99999,
+    label: '%s',
+    options: '%s',
     updated: function(){},
   },
   PluginClass = function() {
@@ -35,6 +37,9 @@
       this.elem = elem;
       this.item = $(elem);
       this.container = $(this.container);
+
+      if(this.item.data('label') !== undefined)
+        this.label = this.item.data('label');
 
       this.loaded();
     };
@@ -62,11 +67,11 @@
           selected = selected.html();
         else selected = selfObj.item.find('option').eq(0).html();
         selfObj.template = '<div class="ui-select">';
-        selfObj.template += '<span class="label">'+selected+'</span>';
+        selfObj.template += '<span class="label">'+selfObj.label.replace('%s',selected)+'</span>';
         selfObj.template += '<ul>';
           $.each(selfObj.item.find('option'),function(key, option) {
             var $option = $(option);
-            selfObj.template += '<li'+(selected == $option.html()?' data-selected="true"':'')+' data-value="'+$option.prop('value')+'">'+$option.html()+'</li>';
+            selfObj.template += '<li'+(selected == $option.html()?' data-selected="true"':'')+' data-value="'+$option.prop('value')+'">'+selfObj.options.replace('%s',$option.html())+'</li>';
           });
 
         selfObj.template += '</ul></div>';
@@ -101,10 +106,12 @@
           alert('Es werden keine doppelten Filter zugelassen!');
         } else {
           selfObj.template.find('li').removeAttr('data-selected');
-          $label.html($el.html());
+          $label.html(selfObj.label.replace('%s',$el.html()));
           selfObj.item.find('option').prop('selected',false);
           $el.attr('data-selected','true');
           selfObj.item.find('option[value="'+$el.data('value')+'"]').prop('selected',true);
+
+          selfObj.updated($el);
         }
       });
      };
