@@ -27,3 +27,35 @@ $(function() {
   });
 });
 ```
+
+<table>
+	<thead>
+		<tr>
+			<th>Option</th>
+			<th>Werte</th>
+			<th>Beschreibung</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>container: document</td>
+			<td>Selector</td>
+			<td>Der Eltern-Container damit die Select-Box ggf. nach oben aufgeht</td>
+		</tr>
+		<tr>
+			<td>label: '%s'</td>
+			<td>string</td>
+			<td>Bitte wählen sie %s Objekte aus:</td>
+		</tr>
+		<tr>
+			<td>options: '%s'</td>
+			<td>string</td>
+			<td>Jede Option kann so Dynamisch erweitert werden: Anzeige: %s</td>
+		</tr>
+		<tr>
+			<td>maxOffset: 99999</td>
+			<td>int/float [0-9]</td>
+			<td>Gibt an, wie weit die geöffnete Select-Box verschoben werden darf.</td>
+		</tr>
+	</tbody>
+</table>
