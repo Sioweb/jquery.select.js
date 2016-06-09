@@ -82,7 +82,7 @@
       $ul = selfObj.template.find('ul').eq(0);
       $ul.css('max-height','none');
       selectHeight = $ul.height();
-      $ul.css({'max-height':false});
+      $ul.css({'max-height':''});
 
       if($ul.offset().top + selectHeight > containerHeight) {
         $ul.css('top',(containerHeight-$ul.offset().top)-Math.min(selfObj.maxOffset,selectHeight));
