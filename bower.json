@@ -1,0 +1,25 @@
+{
+  "name": "jquery.select.js",
+  "homepage": "https://github.com/Sioweb/jquery.select.js",
+  "authors": [
+    "Sascha Weidner <support@sioweb.de>"
+  ],
+  "description": "A simple jquery based select element",
+  "main": "",
+  "keywords": [
+    "jquery",
+    "select",
+    "input"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "*",
+  }
+}
